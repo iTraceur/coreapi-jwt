@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/Subject'), require('angular-web-storage'), require('bluebird'), require('coreapi'), require('rxjs/Observable')) :
-    typeof define === 'function' && define.amd ? define('coreapi-proxy', ['exports', '@angular/core', 'rxjs/Subject', 'angular-web-storage', 'bluebird', 'coreapi', 'rxjs/Observable'], factory) :
-    (global = global || self, factory(global['coreapi-proxy'] = {}, global.ng.core, global.rxjs.Subject, global.angularWebStorage, global.bluebird, global.coreapi, global.rxjs.Observable));
-}(this, (function (exports, core, Subject, angularWebStorage, bluebird, coreapi, Observable) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('angular-web-storage'), require('bluebird'), require('coreapi'), require('rxjs/Observable'), require('rxjs/Subject')) :
+    typeof define === 'function' && define.amd ? define('coreapi-proxy', ['exports', '@angular/core', 'angular-web-storage', 'bluebird', 'coreapi', 'rxjs/Observable', 'rxjs/Subject'], factory) :
+    (global = global || self, factory(global['coreapi-proxy'] = {}, global.ng.core, global.angularWebStorage, global.bluebird, global.coreapi, global.rxjs.Observable, global.rxjs.Subject));
+}(this, (function (exports, core, angularWebStorage, bluebird, coreapi, Observable, Subject) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -692,14 +692,8 @@
 
     exports.ConfigService = ConfigService;
     exports.CoreAPIBaseService = CoreAPIBaseService;
-    exports.CoreAPIClient = CoreAPIClient;
-    exports.CoreAPIClientHttpError = CoreAPIClientHttpError;
-    exports.CoreAPIConfig = CoreAPIConfig;
-    exports.CoreAPIConfigConsts = CoreAPIConfigConsts;
     exports.CoreapiProxyModule = CoreapiProxyModule;
     exports.GlobalState = GlobalState;
-    exports.JwtHelper = JwtHelper;
-    exports.coreAPIFactory = coreAPIFactory;
     exports.tokenNotExpired = tokenNotExpired;
 
     Object.defineProperty(exports, '__esModule', { value: true });

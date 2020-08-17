@@ -1,10 +1,10 @@
-import { ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, ɵɵinject, Injector, ɵɵdefineNgModule, ɵɵdefineInjector, NgModule } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { __awaiter, __generator, __extends } from 'tslib';
+import { ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, ɵɵinject, Injector, ɵɵdefineNgModule, ɵɵdefineInjector, NgModule } from '@angular/core';
 import { LocalStorageService } from 'angular-web-storage';
 import { Promise } from 'bluebird';
 import { auth, Client } from 'coreapi';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 var ConfigService = /** @class */ (function () {
     function ConfigService() {
@@ -481,5 +481,5 @@ var CoreapiProxyModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { ConfigService, CoreAPIBaseService, CoreAPIClient, CoreAPIClientHttpError, CoreAPIConfig, CoreAPIConfigConsts, CoreapiProxyModule, GlobalState, JwtHelper, coreAPIFactory, tokenNotExpired };
+export { ConfigService, CoreAPIBaseService, CoreapiProxyModule, GlobalState, tokenNotExpired };
 //# sourceMappingURL=coreapi-proxy.js.map
