@@ -1,0 +1,8 @@
+/*
+ * Public API Surface of coreapi-proxy
+ */
+export * from './lib/config.service';
+export * from './lib/global.state';
+export * from './lib/coreapi-proxy.service';
+export * from './lib/coreapi-proxy.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL2NvcmVhcGktcHJveHkvIiwic291cmNlcyI6WyJwdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBRUgsY0FBYyxzQkFBc0IsQ0FBQztBQUNyQyxjQUFjLG9CQUFvQixDQUFDO0FBQ25DLGNBQWMsNkJBQTZCLENBQUM7QUFDNUMsY0FBYyw0QkFBNEIsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2YgY29yZWFwaS1wcm94eVxuICovXG5cbmV4cG9ydCAqIGZyb20gJy4vbGliL2NvbmZpZy5zZXJ2aWNlJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL2dsb2JhbC5zdGF0ZSc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9jb3JlYXBpLXByb3h5LnNlcnZpY2UnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvY29yZWFwaS1wcm94eS5tb2R1bGUnO1xuIl19
