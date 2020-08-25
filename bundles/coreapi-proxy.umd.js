@@ -233,13 +233,11 @@
         ConfigService.prototype.get = function (key) {
             return this.data[key];
         };
-        ConfigService.ɵfac = function ConfigService_Factory(t) { return new (t || ConfigService)(); };
-        ConfigService.ɵprov = core.ɵɵdefineInjectable({ token: ConfigService, factory: ConfigService.ɵfac });
+        ConfigService = __decorate([
+            core.Injectable()
+        ], ConfigService);
         return ConfigService;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(ConfigService, [{
-            type: core.Injectable
-        }], null, null); })();
 
     var GlobalState = /** @class */ (function () {
         function GlobalState() {
@@ -262,22 +260,23 @@
         };
         GlobalState.prototype.subscribe = function (event, callback) {
             var subscribers = this._subscriptions.get(event) || [];
-            subscribers.push(callback);
+            if (subscribers.indexOf(callback) < 0) {
+                subscribers.push(callback);
+            }
             this._subscriptions.set(event, subscribers);
         };
         GlobalState.prototype._onEvent = function (data) {
             var subscribers = this._subscriptions.get(data['event']) || [];
+            console.log(subscribers);
             subscribers.forEach(function (callback) {
                 callback.call(null, data['data']);
             });
         };
-        GlobalState.ɵfac = function GlobalState_Factory(t) { return new (t || GlobalState)(); };
-        GlobalState.ɵprov = core.ɵɵdefineInjectable({ token: GlobalState, factory: GlobalState.ɵfac });
+        GlobalState = __decorate([
+            core.Injectable()
+        ], GlobalState);
         return GlobalState;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(GlobalState, [{
-            type: core.Injectable
-        }], function () { return []; }, null); })();
 
     var CoreAPIBaseService = /** @class */ (function () {
         function CoreAPIBaseService(client) {
@@ -289,13 +288,14 @@
             var actionParams = { Params: params, ExtraParams: extraParams };
             return this.client.action(keys, actionParams);
         };
-        CoreAPIBaseService.ɵfac = function CoreAPIBaseService_Factory(t) { return new (t || CoreAPIBaseService)(core.ɵɵinject(CoreAPIClient)); };
-        CoreAPIBaseService.ɵprov = core.ɵɵdefineInjectable({ token: CoreAPIBaseService, factory: CoreAPIBaseService.ɵfac });
+        CoreAPIBaseService.ctorParameters = function () { return [
+            { type: CoreAPIClient }
+        ]; };
+        CoreAPIBaseService = __decorate([
+            core.Injectable()
+        ], CoreAPIBaseService);
         return CoreAPIBaseService;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(CoreAPIBaseService, [{
-            type: core.Injectable
-        }], function () { return [{ type: CoreAPIClient }]; }, null); })();
     var CoreAPIConfigConsts = /** @class */ (function () {
         function CoreAPIConfigConsts() {
         }
@@ -304,13 +304,14 @@
         CoreAPIConfigConsts.DEFAULT_TOKEN_NAME = 'token';
         return CoreAPIConfigConsts;
     }());
+    var ɵ0 = function () {
+        return localStorage.getItem(COREAPI_CONFIG_DEFAULTS.tokenName);
+    };
     var COREAPI_CONFIG_DEFAULTS = {
         headerName: CoreAPIConfigConsts.DEFAULT_HEADER_NAME,
         headerPrefix: null,
         tokenName: CoreAPIConfigConsts.DEFAULT_TOKEN_NAME,
-        tokenGetter: function () {
-            return localStorage.getItem(COREAPI_CONFIG_DEFAULTS.tokenName);
-        },
+        tokenGetter: ɵ0,
         noJwtError: false,
         noClientCheck: false,
         globalHeaders: [],
@@ -592,13 +593,16 @@
             enumerable: true,
             configurable: true
         });
-        CoreAPIClient.ɵfac = function CoreAPIClient_Factory(t) { return new (t || CoreAPIClient)(core.ɵɵinject(CoreAPIConfig), core.ɵɵinject(ConfigService), core.ɵɵinject(GlobalState)); };
-        CoreAPIClient.ɵprov = core.ɵɵdefineInjectable({ token: CoreAPIClient, factory: CoreAPIClient.ɵfac });
+        CoreAPIClient.ctorParameters = function () { return [
+            { type: CoreAPIConfig },
+            { type: ConfigService },
+            { type: GlobalState }
+        ]; };
+        CoreAPIClient = __decorate([
+            core.Injectable()
+        ], CoreAPIClient);
         return CoreAPIClient;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(CoreAPIClient, [{
-            type: core.Injectable
-        }], function () { return [{ type: CoreAPIConfig }, { type: ConfigService }, { type: GlobalState }]; }, null); })();
     function coreAPIFactory(config, globalState) {
         var coreAPIConfig = {
             headerName: CoreAPIConfigConsts.DEFAULT_HEADER_NAME,
@@ -655,46 +659,39 @@
         return CoreAPIClientHttpError;
     }(Error));
 
+    var ɵ0$1 = coreAPIFactory;
     var CoreapiProxyModule = /** @class */ (function () {
         function CoreapiProxyModule() {
         }
-        CoreapiProxyModule.ɵmod = core.ɵɵdefineNgModule({ type: CoreapiProxyModule });
-        CoreapiProxyModule.ɵinj = core.ɵɵdefineInjector({ factory: function CoreapiProxyModule_Factory(t) { return new (t || CoreapiProxyModule)(); }, providers: [
-                ConfigService,
-                GlobalState,
-                CoreAPIBaseService,
-                {
-                    provide: CoreAPIClient,
-                    useFactory: coreAPIFactory,
-                    deps: [ConfigService, GlobalState],
-                }
-            ], imports: [[]] });
+        CoreapiProxyModule = __decorate([
+            core.NgModule({
+                declarations: [],
+                imports: [],
+                providers: [
+                    ConfigService,
+                    GlobalState,
+                    CoreAPIBaseService,
+                    {
+                        provide: CoreAPIClient,
+                        useFactory: ɵ0$1,
+                        deps: [ConfigService, GlobalState],
+                    }
+                ],
+                exports: []
+            })
+        ], CoreapiProxyModule);
         return CoreapiProxyModule;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(CoreapiProxyModule, [{
-            type: core.NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [],
-                    providers: [
-                        ConfigService,
-                        GlobalState,
-                        CoreAPIBaseService,
-                        {
-                            provide: CoreAPIClient,
-                            useFactory: coreAPIFactory,
-                            deps: [ConfigService, GlobalState],
-                        }
-                    ],
-                    exports: []
-                }]
-        }], null, null); })();
 
     exports.ConfigService = ConfigService;
     exports.CoreAPIBaseService = CoreAPIBaseService;
     exports.CoreapiProxyModule = CoreapiProxyModule;
     exports.GlobalState = GlobalState;
     exports.tokenNotExpired = tokenNotExpired;
+    exports.ɵ0 = ɵ0$1;
+    exports.ɵa = CoreAPIConfig;
+    exports.ɵb = CoreAPIClient;
+    exports.ɵc = coreAPIFactory;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -30,8 +30,6 @@
   "fesm5": "fesm5/coreapi-proxy.js",
   "fesm2015": "fesm2015/coreapi-proxy.js",
   "typings": "coreapi-proxy.d.ts",
-  "sideEffects": false,
-  "scripts": {
-    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy. This is not allowed.\\nPlease delete and rebuild the package, without compiling with Ivy, before attempting to publish.\\n')\" && exit 1"
-  }
+  "metadata": "coreapi-proxy.metadata.json",
+  "sideEffects": false
 }

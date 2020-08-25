@@ -1,12 +1,12 @@
-import { __awaiter } from 'tslib';
-import { ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, ɵɵinject, Injector, ɵɵdefineNgModule, ɵɵdefineInjector, NgModule } from '@angular/core';
+import { __decorate, __awaiter } from 'tslib';
+import { Injectable, Injector, NgModule } from '@angular/core';
 import { LocalStorageService } from 'angular-web-storage';
 import { Promise } from 'bluebird';
 import { auth, Client } from 'coreapi';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-class ConfigService {
+let ConfigService = class ConfigService {
     constructor() {
         this.data = null;
     }
@@ -16,14 +16,12 @@ class ConfigService {
     get(key) {
         return this.data[key];
     }
-}
-ConfigService.ɵfac = function ConfigService_Factory(t) { return new (t || ConfigService)(); };
-ConfigService.ɵprov = ɵɵdefineInjectable({ token: ConfigService, factory: ConfigService.ɵfac });
-/*@__PURE__*/ (function () { ɵsetClassMetadata(ConfigService, [{
-        type: Injectable
-    }], null, null); })();
+};
+ConfigService = __decorate([
+    Injectable()
+], ConfigService);
 
-class GlobalState {
+let GlobalState = class GlobalState {
     constructor() {
         this._data = new Subject();
         this._dataStream$ = this._data.asObservable();
@@ -42,23 +40,24 @@ class GlobalState {
     }
     subscribe(event, callback) {
         const subscribers = this._subscriptions.get(event) || [];
-        subscribers.push(callback);
+        if (subscribers.indexOf(callback) < 0) {
+            subscribers.push(callback);
+        }
         this._subscriptions.set(event, subscribers);
     }
     _onEvent(data) {
         const subscribers = this._subscriptions.get(data['event']) || [];
+        console.log(subscribers);
         subscribers.forEach((callback) => {
             callback.call(null, data['data']);
         });
     }
-}
-GlobalState.ɵfac = function GlobalState_Factory(t) { return new (t || GlobalState)(); };
-GlobalState.ɵprov = ɵɵdefineInjectable({ token: GlobalState, factory: GlobalState.ɵfac });
-/*@__PURE__*/ (function () { ɵsetClassMetadata(GlobalState, [{
-        type: Injectable
-    }], function () { return []; }, null); })();
+};
+GlobalState = __decorate([
+    Injectable()
+], GlobalState);
 
-class CoreAPIBaseService {
+let CoreAPIBaseService = class CoreAPIBaseService {
     constructor(client) {
         this.client = client;
     }
@@ -66,22 +65,24 @@ class CoreAPIBaseService {
         const actionParams = { Params: params, ExtraParams: extraParams };
         return this.client.action(keys, actionParams);
     }
-}
-CoreAPIBaseService.ɵfac = function CoreAPIBaseService_Factory(t) { return new (t || CoreAPIBaseService)(ɵɵinject(CoreAPIClient)); };
-CoreAPIBaseService.ɵprov = ɵɵdefineInjectable({ token: CoreAPIBaseService, factory: CoreAPIBaseService.ɵfac });
-/*@__PURE__*/ (function () { ɵsetClassMetadata(CoreAPIBaseService, [{
-        type: Injectable
-    }], function () { return [{ type: CoreAPIClient }]; }, null); })();
+};
+CoreAPIBaseService.ctorParameters = () => [
+    { type: CoreAPIClient }
+];
+CoreAPIBaseService = __decorate([
+    Injectable()
+], CoreAPIBaseService);
 class CoreAPIConfigConsts {
 }
 CoreAPIConfigConsts.DEFAULT_HEADER_NAME = 'Authorization';
 CoreAPIConfigConsts.HEADER_PREFIX_BEARER = 'JWT';
 CoreAPIConfigConsts.DEFAULT_TOKEN_NAME = 'token';
+const ɵ0 = () => localStorage.getItem(COREAPI_CONFIG_DEFAULTS.tokenName);
 const COREAPI_CONFIG_DEFAULTS = {
     headerName: CoreAPIConfigConsts.DEFAULT_HEADER_NAME,
     headerPrefix: null,
     tokenName: CoreAPIConfigConsts.DEFAULT_TOKEN_NAME,
-    tokenGetter: () => localStorage.getItem(COREAPI_CONFIG_DEFAULTS.tokenName),
+    tokenGetter: ɵ0,
     noJwtError: false,
     noClientCheck: false,
     globalHeaders: [],
@@ -211,7 +212,7 @@ class CoreAPIConfig {
         return this._config;
     }
 }
-class CoreAPIClient {
+let CoreAPIClient = class CoreAPIClient {
     constructor(options, config, globalState) {
         this.options = options;
         this.config = config;
@@ -333,12 +334,15 @@ class CoreAPIClient {
         }
         return this._client;
     }
-}
-CoreAPIClient.ɵfac = function CoreAPIClient_Factory(t) { return new (t || CoreAPIClient)(ɵɵinject(CoreAPIConfig), ɵɵinject(ConfigService), ɵɵinject(GlobalState)); };
-CoreAPIClient.ɵprov = ɵɵdefineInjectable({ token: CoreAPIClient, factory: CoreAPIClient.ɵfac });
-/*@__PURE__*/ (function () { ɵsetClassMetadata(CoreAPIClient, [{
-        type: Injectable
-    }], function () { return [{ type: CoreAPIConfig }, { type: ConfigService }, { type: GlobalState }]; }, null); })();
+};
+CoreAPIClient.ctorParameters = () => [
+    { type: CoreAPIConfig },
+    { type: ConfigService },
+    { type: GlobalState }
+];
+CoreAPIClient = __decorate([
+    Injectable()
+], CoreAPIClient);
 function coreAPIFactory(config, globalState) {
     const coreAPIConfig = {
         headerName: CoreAPIConfigConsts.DEFAULT_HEADER_NAME,
@@ -386,37 +390,26 @@ function objectAssign(target, ...source) {
 class CoreAPIClientHttpError extends Error {
 }
 
-class CoreapiProxyModule {
-}
-CoreapiProxyModule.ɵmod = ɵɵdefineNgModule({ type: CoreapiProxyModule });
-CoreapiProxyModule.ɵinj = ɵɵdefineInjector({ factory: function CoreapiProxyModule_Factory(t) { return new (t || CoreapiProxyModule)(); }, providers: [
-        ConfigService,
-        GlobalState,
-        CoreAPIBaseService,
-        {
-            provide: CoreAPIClient,
-            useFactory: coreAPIFactory,
-            deps: [ConfigService, GlobalState],
-        }
-    ], imports: [[]] });
-/*@__PURE__*/ (function () { ɵsetClassMetadata(CoreapiProxyModule, [{
-        type: NgModule,
-        args: [{
-                declarations: [],
-                imports: [],
-                providers: [
-                    ConfigService,
-                    GlobalState,
-                    CoreAPIBaseService,
-                    {
-                        provide: CoreAPIClient,
-                        useFactory: coreAPIFactory,
-                        deps: [ConfigService, GlobalState],
-                    }
-                ],
-                exports: []
-            }]
-    }], null, null); })();
+const ɵ0$1 = coreAPIFactory;
+let CoreapiProxyModule = class CoreapiProxyModule {
+};
+CoreapiProxyModule = __decorate([
+    NgModule({
+        declarations: [],
+        imports: [],
+        providers: [
+            ConfigService,
+            GlobalState,
+            CoreAPIBaseService,
+            {
+                provide: CoreAPIClient,
+                useFactory: ɵ0$1,
+                deps: [ConfigService, GlobalState],
+            }
+        ],
+        exports: []
+    })
+], CoreapiProxyModule);
 
 /*
  * Public API Surface of coreapi-proxy
@@ -426,5 +419,5 @@ CoreapiProxyModule.ɵinj = ɵɵdefineInjector({ factory: function CoreapiProxyMo
  * Generated bundle index. Do not edit.
  */
 
-export { ConfigService, CoreAPIBaseService, CoreapiProxyModule, GlobalState, tokenNotExpired };
+export { ConfigService, CoreAPIBaseService, CoreapiProxyModule, GlobalState, tokenNotExpired, ɵ0$1 as ɵ0, CoreAPIConfig as ɵa, CoreAPIClient as ɵb, coreAPIFactory as ɵc };
 //# sourceMappingURL=coreapi-proxy.js.map
