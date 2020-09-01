@@ -1,12 +1,12 @@
-import { __decorate, __awaiter } from 'tslib';
-import { Injectable, Injector, NgModule } from '@angular/core';
+import { __awaiter } from 'tslib';
+import { ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, ɵɵinject, Injector, ɵɵdefineNgModule, ɵɵdefineInjector, NgModule } from '@angular/core';
 import { LocalStorageService } from 'angular-web-storage';
 import { Promise } from 'bluebird';
 import { auth, Client } from 'coreapi';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-let ConfigService = class ConfigService {
+class ConfigService {
     constructor() {
         this.data = null;
     }
@@ -16,48 +16,51 @@ let ConfigService = class ConfigService {
     get(key) {
         return this.data[key];
     }
-};
-ConfigService = __decorate([
-    Injectable()
-], ConfigService);
+}
+ConfigService.ɵfac = function ConfigService_Factory(t) { return new (t || ConfigService)(); };
+ConfigService.ɵprov = ɵɵdefineInjectable({ token: ConfigService, factory: ConfigService.ɵfac });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ConfigService, [{
+        type: Injectable
+    }], null, null); })();
 
-let GlobalState = class GlobalState {
+class GlobalState {
     constructor() {
-        this._data = new Subject();
-        this._dataStream$ = this._data.asObservable();
-        this._subscriptions = new Map();
-        this._dataStream$.subscribe((data) => this._onEvent(data));
+        this.data = new Subject();
+        this.dataStream$ = this.data.asObservable();
+        this.subscriptions = new Map();
+        this.dataStream$.subscribe((data) => this.onEvent(data));
     }
-    notifyDataChanged(event, value, force = false) {
-        const current = this._data[event];
+    publish(event, value, force = false) {
+        const current = this.data[event];
         if (current !== value || force) {
-            this._data[event] = value;
-            this._data.next({
+            this.data[event] = value;
+            this.data.next({
                 event: event,
-                data: this._data[event],
+                data: this.data[event],
             });
         }
     }
     subscribe(event, callback) {
-        const subscribers = this._subscriptions.get(event) || [];
+        const subscribers = this.subscriptions.get(event) || [];
         if (subscribers.indexOf(callback) < 0) {
             subscribers.push(callback);
         }
-        this._subscriptions.set(event, subscribers);
+        this.subscriptions.set(event, subscribers);
     }
-    _onEvent(data) {
-        const subscribers = this._subscriptions.get(data['event']) || [];
-        console.log(subscribers);
+    onEvent(data) {
+        const subscribers = this.subscriptions.get(data['event']) || [];
         subscribers.forEach((callback) => {
             callback.call(null, data['data']);
         });
     }
-};
-GlobalState = __decorate([
-    Injectable()
-], GlobalState);
+}
+GlobalState.ɵfac = function GlobalState_Factory(t) { return new (t || GlobalState)(); };
+GlobalState.ɵprov = ɵɵdefineInjectable({ token: GlobalState, factory: GlobalState.ɵfac });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(GlobalState, [{
+        type: Injectable
+    }], function () { return []; }, null); })();
 
-let CoreAPIBaseService = class CoreAPIBaseService {
+class CoreAPIBaseService {
     constructor(client) {
         this.client = client;
     }
@@ -65,24 +68,22 @@ let CoreAPIBaseService = class CoreAPIBaseService {
         const actionParams = { Params: params, ExtraParams: extraParams };
         return this.client.action(keys, actionParams);
     }
-};
-CoreAPIBaseService.ctorParameters = () => [
-    { type: CoreAPIClient }
-];
-CoreAPIBaseService = __decorate([
-    Injectable()
-], CoreAPIBaseService);
+}
+CoreAPIBaseService.ɵfac = function CoreAPIBaseService_Factory(t) { return new (t || CoreAPIBaseService)(ɵɵinject(CoreAPIClient)); };
+CoreAPIBaseService.ɵprov = ɵɵdefineInjectable({ token: CoreAPIBaseService, factory: CoreAPIBaseService.ɵfac });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(CoreAPIBaseService, [{
+        type: Injectable
+    }], function () { return [{ type: CoreAPIClient }]; }, null); })();
 class CoreAPIConfigConsts {
 }
 CoreAPIConfigConsts.DEFAULT_HEADER_NAME = 'Authorization';
 CoreAPIConfigConsts.HEADER_PREFIX_BEARER = 'JWT';
 CoreAPIConfigConsts.DEFAULT_TOKEN_NAME = 'token';
-const ɵ0 = () => localStorage.getItem(COREAPI_CONFIG_DEFAULTS.tokenName);
 const COREAPI_CONFIG_DEFAULTS = {
     headerName: CoreAPIConfigConsts.DEFAULT_HEADER_NAME,
     headerPrefix: null,
     tokenName: CoreAPIConfigConsts.DEFAULT_TOKEN_NAME,
-    tokenGetter: ɵ0,
+    tokenGetter: () => localStorage.getItem(COREAPI_CONFIG_DEFAULTS.tokenName),
     noJwtError: false,
     noClientCheck: false,
     globalHeaders: [],
@@ -212,7 +213,7 @@ class CoreAPIConfig {
         return this._config;
     }
 }
-let CoreAPIClient = class CoreAPIClient {
+class CoreAPIClient {
     constructor(options, config, globalState) {
         this.options = options;
         this.config = config;
@@ -281,17 +282,18 @@ let CoreAPIClient = class CoreAPIClient {
         });
     }
     action(keys, params = {}) {
-        this.globalState.notifyDataChanged('http.loading', true);
+        this.globalState.publish('http.loading', true);
         return new Promise((resolve, reject) => {
             this.getSchema()
                 .then(doc => {
                 this.client
                     .action(doc, keys, params.Params, params.ExtraParams)
                     .then(data => {
-                    this.globalState.notifyDataChanged('http.loading', false);
+                    this.globalState.publish('http.loading', false);
                     resolve(data);
                 })
                     .catch(error => {
+                    console.error(error);
                     let message = '';
                     if (Object.prototype.toString.call(error.content) === '[object Object]') { // Whether it is an Objec object
                         message = error.content.detail;
@@ -300,24 +302,24 @@ let CoreAPIClient = class CoreAPIClient {
                         message = error.content;
                     }
                     if (error.response.status === 401) {
-                        this.globalState.notifyDataChanged('http.401', message);
+                        this.globalState.publish('http.401', message);
                     }
                     else if (error.response.status === 403) {
-                        this.globalState.notifyDataChanged('http.403', message, true);
+                        this.globalState.publish('http.403', message, true);
                     }
                     else if (error.response.status === 500) {
-                        this.globalState.notifyDataChanged('http.500', message, true);
+                        this.globalState.publish('http.500', message, true);
                     }
                     else if (error.response.status === 501) {
-                        this.globalState.notifyDataChanged('http.501', message, true);
+                        this.globalState.publish('http.501', message, true);
                     }
-                    this.globalState.notifyDataChanged('http.loading', false);
+                    this.globalState.publish('http.loading', false);
                     reject(error);
                 });
             })
                 .catch(error => {
                 console.error(`Request ${keys} failed.`, error);
-                this.globalState.notifyDataChanged('http.loading', false);
+                this.globalState.publish('http.loading', false);
                 reject(error);
             });
         });
@@ -334,15 +336,12 @@ let CoreAPIClient = class CoreAPIClient {
         }
         return this._client;
     }
-};
-CoreAPIClient.ctorParameters = () => [
-    { type: CoreAPIConfig },
-    { type: ConfigService },
-    { type: GlobalState }
-];
-CoreAPIClient = __decorate([
-    Injectable()
-], CoreAPIClient);
+}
+CoreAPIClient.ɵfac = function CoreAPIClient_Factory(t) { return new (t || CoreAPIClient)(ɵɵinject(CoreAPIConfig), ɵɵinject(ConfigService), ɵɵinject(GlobalState)); };
+CoreAPIClient.ɵprov = ɵɵdefineInjectable({ token: CoreAPIClient, factory: CoreAPIClient.ɵfac });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(CoreAPIClient, [{
+        type: Injectable
+    }], function () { return [{ type: CoreAPIConfig }, { type: ConfigService }, { type: GlobalState }]; }, null); })();
 function coreAPIFactory(config, globalState) {
     const coreAPIConfig = {
         headerName: CoreAPIConfigConsts.DEFAULT_HEADER_NAME,
@@ -390,26 +389,37 @@ function objectAssign(target, ...source) {
 class CoreAPIClientHttpError extends Error {
 }
 
-const ɵ0$1 = coreAPIFactory;
-let CoreapiProxyModule = class CoreapiProxyModule {
-};
-CoreapiProxyModule = __decorate([
-    NgModule({
-        declarations: [],
-        imports: [],
-        providers: [
-            ConfigService,
-            GlobalState,
-            CoreAPIBaseService,
-            {
-                provide: CoreAPIClient,
-                useFactory: ɵ0$1,
-                deps: [ConfigService, GlobalState],
-            }
-        ],
-        exports: []
-    })
-], CoreapiProxyModule);
+class CoreAPIProxyModule {
+}
+CoreAPIProxyModule.ɵmod = ɵɵdefineNgModule({ type: CoreAPIProxyModule });
+CoreAPIProxyModule.ɵinj = ɵɵdefineInjector({ factory: function CoreAPIProxyModule_Factory(t) { return new (t || CoreAPIProxyModule)(); }, providers: [
+        ConfigService,
+        GlobalState,
+        CoreAPIBaseService,
+        {
+            provide: CoreAPIClient,
+            useFactory: coreAPIFactory,
+            deps: [ConfigService, GlobalState],
+        }
+    ], imports: [[]] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(CoreAPIProxyModule, [{
+        type: NgModule,
+        args: [{
+                declarations: [],
+                imports: [],
+                providers: [
+                    ConfigService,
+                    GlobalState,
+                    CoreAPIBaseService,
+                    {
+                        provide: CoreAPIClient,
+                        useFactory: coreAPIFactory,
+                        deps: [ConfigService, GlobalState],
+                    }
+                ],
+                exports: []
+            }]
+    }], null, null); })();
 
 /*
  * Public API Surface of coreapi-proxy
@@ -419,5 +429,5 @@ CoreapiProxyModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { ConfigService, CoreAPIBaseService, CoreapiProxyModule, GlobalState, tokenNotExpired, ɵ0$1 as ɵ0, CoreAPIConfig as ɵa, CoreAPIClient as ɵb, coreAPIFactory as ɵc };
-//# sourceMappingURL=coreapi-proxy.js.map
+export { ConfigService, CoreAPIBaseService, CoreAPIProxyModule, GlobalState, tokenNotExpired };
+//# sourceMappingURL=ngx-coreapi-proxy.js.map

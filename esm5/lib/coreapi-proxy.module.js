@@ -1,31 +1,41 @@
-import { __decorate } from "tslib";
 import { NgModule } from '@angular/core';
 import { ConfigService } from './config.service';
 import { GlobalState } from './global.state';
 import { CoreAPIClient, CoreAPIBaseService, coreAPIFactory } from './coreapi-proxy.service';
-var ɵ0 = coreAPIFactory;
-var CoreapiProxyModule = /** @class */ (function () {
-    function CoreapiProxyModule() {
+import * as i0 from "@angular/core";
+var CoreAPIProxyModule = /** @class */ (function () {
+    function CoreAPIProxyModule() {
     }
-    CoreapiProxyModule = __decorate([
-        NgModule({
-            declarations: [],
-            imports: [],
-            providers: [
-                ConfigService,
-                GlobalState,
-                CoreAPIBaseService,
-                {
-                    provide: CoreAPIClient,
-                    useFactory: ɵ0,
-                    deps: [ConfigService, GlobalState],
-                }
-            ],
-            exports: []
-        })
-    ], CoreapiProxyModule);
-    return CoreapiProxyModule;
+    CoreAPIProxyModule.ɵmod = i0.ɵɵdefineNgModule({ type: CoreAPIProxyModule });
+    CoreAPIProxyModule.ɵinj = i0.ɵɵdefineInjector({ factory: function CoreAPIProxyModule_Factory(t) { return new (t || CoreAPIProxyModule)(); }, providers: [
+            ConfigService,
+            GlobalState,
+            CoreAPIBaseService,
+            {
+                provide: CoreAPIClient,
+                useFactory: coreAPIFactory,
+                deps: [ConfigService, GlobalState],
+            }
+        ], imports: [[]] });
+    return CoreAPIProxyModule;
 }());
-export { CoreapiProxyModule };
-export { ɵ0 };
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29yZWFwaS1wcm94eS5tb2R1bGUuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9jb3JlYXBpLXByb3h5LyIsInNvdXJjZXMiOlsibGliL2NvcmVhcGktcHJveHkubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSxrQkFBa0IsQ0FBQztBQUNqRCxPQUFPLEVBQUUsV0FBVyxFQUFFLE1BQU0sZ0JBQWdCLENBQUM7QUFDN0MsT0FBTyxFQUFFLGFBQWEsRUFBRSxrQkFBa0IsRUFBRSxjQUFjLEVBQUUsTUFBTSx5QkFBeUIsQ0FBQztTQWUxRSxjQUFjO0FBT2hDO0lBQUE7SUFBa0MsQ0FBQztJQUF0QixrQkFBa0I7UUFsQjlCLFFBQVEsQ0FBQztZQUNSLFlBQVksRUFBRSxFQUNiO1lBQ0QsT0FBTyxFQUFFLEVBQ1I7WUFDRCxTQUFTLEVBQUU7Z0JBQ1QsYUFBYTtnQkFDYixXQUFXO2dCQUNYLGtCQUFrQjtnQkFDbEI7b0JBQ0UsT0FBTyxFQUFFLGFBQWE7b0JBQ3RCLFVBQVUsSUFBZ0I7b0JBQzFCLElBQUksRUFBRSxDQUFDLGFBQWEsRUFBRSxXQUFXLENBQUM7aUJBQ25DO2FBQ0Y7WUFDRCxPQUFPLEVBQUUsRUFDUjtTQUNGLENBQUM7T0FDVyxrQkFBa0IsQ0FBSTtJQUFELHlCQUFDO0NBQUEsQUFBbkMsSUFBbUM7U0FBdEIsa0JBQWtCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmdNb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IENvbmZpZ1NlcnZpY2UgfSBmcm9tICcuL2NvbmZpZy5zZXJ2aWNlJztcbmltcG9ydCB7IEdsb2JhbFN0YXRlIH0gZnJvbSAnLi9nbG9iYWwuc3RhdGUnO1xuaW1wb3J0IHsgQ29yZUFQSUNsaWVudCwgQ29yZUFQSUJhc2VTZXJ2aWNlLCBjb3JlQVBJRmFjdG9yeSB9IGZyb20gJy4vY29yZWFwaS1wcm94eS5zZXJ2aWNlJztcblxuXG5cbkBOZ01vZHVsZSh7XG4gIGRlY2xhcmF0aW9uczogW1xuICBdLFxuICBpbXBvcnRzOiBbXG4gIF0sXG4gIHByb3ZpZGVyczogW1xuICAgIENvbmZpZ1NlcnZpY2UsXG4gICAgR2xvYmFsU3RhdGUsXG4gICAgQ29yZUFQSUJhc2VTZXJ2aWNlLFxuICAgIHtcbiAgICAgIHByb3ZpZGU6IENvcmVBUElDbGllbnQsXG4gICAgICB1c2VGYWN0b3J5OiBjb3JlQVBJRmFjdG9yeSxcbiAgICAgIGRlcHM6IFtDb25maWdTZXJ2aWNlLCBHbG9iYWxTdGF0ZV0sXG4gICAgfVxuICBdLFxuICBleHBvcnRzOiBbXG4gIF1cbn0pXG5leHBvcnQgY2xhc3MgQ29yZWFwaVByb3h5TW9kdWxlIHsgfVxuIl19
+export { CoreAPIProxyModule };
+/*@__PURE__*/ (function () { i0.ɵsetClassMetadata(CoreAPIProxyModule, [{
+        type: NgModule,
+        args: [{
+                declarations: [],
+                imports: [],
+                providers: [
+                    ConfigService,
+                    GlobalState,
+                    CoreAPIBaseService,
+                    {
+                        provide: CoreAPIClient,
+                        useFactory: coreAPIFactory,
+                        deps: [ConfigService, GlobalState],
+                    }
+                ],
+                exports: []
+            }]
+    }], null, null); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29yZWFwaS1wcm94eS5tb2R1bGUuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9uZ3gtY29yZWFwaS1wcm94eS8iLCJzb3VyY2VzIjpbImxpYi9jb3JlYXBpLXByb3h5Lm1vZHVsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSxrQkFBa0IsQ0FBQztBQUNqRCxPQUFPLEVBQUUsV0FBVyxFQUFFLE1BQU0sZ0JBQWdCLENBQUM7QUFDN0MsT0FBTyxFQUFFLGFBQWEsRUFBRSxrQkFBa0IsRUFBRSxjQUFjLEVBQUUsTUFBTSx5QkFBeUIsQ0FBQzs7QUFJNUY7SUFBQTtLQWtCbUM7MERBQXRCLGtCQUFrQjt1SEFBbEIsa0JBQWtCLG1CQWJsQjtZQUNULGFBQWE7WUFDYixXQUFXO1lBQ1gsa0JBQWtCO1lBQ2xCO2dCQUNFLE9BQU8sRUFBRSxhQUFhO2dCQUN0QixVQUFVLEVBQUUsY0FBYztnQkFDMUIsSUFBSSxFQUFFLENBQUMsYUFBYSxFQUFFLFdBQVcsQ0FBQzthQUNuQztTQUNGLFlBWFEsRUFDUjs2QkFYSDtDQXlCbUMsQUFsQm5DLElBa0JtQztTQUF0QixrQkFBa0I7a0RBQWxCLGtCQUFrQjtjQWxCOUIsUUFBUTtlQUFDO2dCQUNSLFlBQVksRUFBRSxFQUNiO2dCQUNELE9BQU8sRUFBRSxFQUNSO2dCQUNELFNBQVMsRUFBRTtvQkFDVCxhQUFhO29CQUNiLFdBQVc7b0JBQ1gsa0JBQWtCO29CQUNsQjt3QkFDRSxPQUFPLEVBQUUsYUFBYTt3QkFDdEIsVUFBVSxFQUFFLGNBQWM7d0JBQzFCLElBQUksRUFBRSxDQUFDLGFBQWEsRUFBRSxXQUFXLENBQUM7cUJBQ25DO2lCQUNGO2dCQUNELE9BQU8sRUFBRSxFQUNSO2FBQ0YiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQ29uZmlnU2VydmljZSB9IGZyb20gJy4vY29uZmlnLnNlcnZpY2UnO1xuaW1wb3J0IHsgR2xvYmFsU3RhdGUgfSBmcm9tICcuL2dsb2JhbC5zdGF0ZSc7XG5pbXBvcnQgeyBDb3JlQVBJQ2xpZW50LCBDb3JlQVBJQmFzZVNlcnZpY2UsIGNvcmVBUElGYWN0b3J5IH0gZnJvbSAnLi9jb3JlYXBpLXByb3h5LnNlcnZpY2UnO1xuXG5cblxuQE5nTW9kdWxlKHtcbiAgZGVjbGFyYXRpb25zOiBbXG4gIF0sXG4gIGltcG9ydHM6IFtcbiAgXSxcbiAgcHJvdmlkZXJzOiBbXG4gICAgQ29uZmlnU2VydmljZSxcbiAgICBHbG9iYWxTdGF0ZSxcbiAgICBDb3JlQVBJQmFzZVNlcnZpY2UsXG4gICAge1xuICAgICAgcHJvdmlkZTogQ29yZUFQSUNsaWVudCxcbiAgICAgIHVzZUZhY3Rvcnk6IGNvcmVBUElGYWN0b3J5LFxuICAgICAgZGVwczogW0NvbmZpZ1NlcnZpY2UsIEdsb2JhbFN0YXRlXSxcbiAgICB9XG4gIF0sXG4gIGV4cG9ydHM6IFtcbiAgXVxufSlcbmV4cG9ydCBjbGFzcyBDb3JlQVBJUHJveHlNb2R1bGUgeyB9XG4iXX0=

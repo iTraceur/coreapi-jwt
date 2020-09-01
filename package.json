@@ -1,11 +1,12 @@
 {
-  "name": "coreapi-proxy",
+  "name": "ngx-coreapi-proxy",
   "version": "0.0.1",
   "author": "iTraceur",
   "license": "MIT",
   "keywords": [
     "coreapi",
-    "coreapi-proxy"
+    "coreapi-proxy",
+    "ngx-coreapi-proxy"
   ],
   "repository": {
     "type": "git",
@@ -22,14 +23,16 @@
     "tslib": "^1.10.0",
     "coreapi": "github:iTraceur/coreapi-javascript-client"
   },
-  "main": "bundles/coreapi-proxy.umd.js",
-  "module": "fesm5/coreapi-proxy.js",
-  "es2015": "fesm2015/coreapi-proxy.js",
-  "esm5": "esm5/coreapi-proxy.js",
-  "esm2015": "esm2015/coreapi-proxy.js",
-  "fesm5": "fesm5/coreapi-proxy.js",
-  "fesm2015": "fesm2015/coreapi-proxy.js",
-  "typings": "coreapi-proxy.d.ts",
-  "metadata": "coreapi-proxy.metadata.json",
-  "sideEffects": false
+  "main": "bundles/ngx-coreapi-proxy.umd.js",
+  "module": "fesm5/ngx-coreapi-proxy.js",
+  "es2015": "fesm2015/ngx-coreapi-proxy.js",
+  "esm5": "esm5/ngx-coreapi-proxy.js",
+  "esm2015": "esm2015/ngx-coreapi-proxy.js",
+  "fesm5": "fesm5/ngx-coreapi-proxy.js",
+  "fesm2015": "fesm2015/ngx-coreapi-proxy.js",
+  "typings": "ngx-coreapi-proxy.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy. This is not allowed.\\nPlease delete and rebuild the package, without compiling with Ivy, before attempting to publish.\\n')\" && exit 1"
+  }
 }
