@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('angular-web-storage'), require('bluebird'), require('coreapi'), require('rxjs/Observable'), require('rxjs/Subject')) :
-    typeof define === 'function' && define.amd ? define('ngx-coreapi-proxy', ['exports', '@angular/core', 'angular-web-storage', 'bluebird', 'coreapi', 'rxjs/Observable', 'rxjs/Subject'], factory) :
-    (global = global || self, factory(global['ngx-coreapi-proxy'] = {}, global.ng.core, global.angularWebStorage, global.bluebird, global.coreapi, global.rxjs.Observable, global.rxjs.Subject));
-}(this, (function (exports, core, angularWebStorage, bluebird, coreapi, Observable, Subject) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('angular-web-storage'), require('bluebird'), require('coreapi'), require('rxjs'), require('rxjs/Subject')) :
+    typeof define === 'function' && define.amd ? define('ngx-coreapi-proxy', ['exports', '@angular/core', 'angular-web-storage', 'bluebird', 'coreapi', 'rxjs', 'rxjs/Subject'], factory) :
+    (global = global || self, factory(global['ngx-coreapi-proxy'] = {}, global.ng.core, global.angularWebStorage, global.bluebird, global.coreapi, global.rxjs, global.rxjs.Subject));
+}(this, (function (exports, core, angularWebStorage, bluebird, coreapi, rxjs, Subject) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -233,13 +233,11 @@
         ConfigService.prototype.get = function (key) {
             return this.data[key];
         };
-        ConfigService.ɵfac = function ConfigService_Factory(t) { return new (t || ConfigService)(); };
-        ConfigService.ɵprov = core.ɵɵdefineInjectable({ token: ConfigService, factory: ConfigService.ɵfac });
+        ConfigService = __decorate([
+            core.Injectable()
+        ], ConfigService);
         return ConfigService;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(ConfigService, [{
-            type: core.Injectable
-        }], null, null); })();
 
     var GlobalState = /** @class */ (function () {
         function GlobalState() {
@@ -273,13 +271,11 @@
                 callback.call(null, data['data']);
             });
         };
-        GlobalState.ɵfac = function GlobalState_Factory(t) { return new (t || GlobalState)(); };
-        GlobalState.ɵprov = core.ɵɵdefineInjectable({ token: GlobalState, factory: GlobalState.ɵfac });
+        GlobalState = __decorate([
+            core.Injectable()
+        ], GlobalState);
         return GlobalState;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(GlobalState, [{
-            type: core.Injectable
-        }], function () { return []; }, null); })();
 
     var CoreAPIBaseService = /** @class */ (function () {
         function CoreAPIBaseService(client) {
@@ -291,13 +287,14 @@
             var actionParams = { Params: params, ExtraParams: extraParams };
             return this.client.action(keys, actionParams);
         };
-        CoreAPIBaseService.ɵfac = function CoreAPIBaseService_Factory(t) { return new (t || CoreAPIBaseService)(core.ɵɵinject(CoreAPIClient)); };
-        CoreAPIBaseService.ɵprov = core.ɵɵdefineInjectable({ token: CoreAPIBaseService, factory: CoreAPIBaseService.ɵfac });
+        CoreAPIBaseService.ctorParameters = function () { return [
+            { type: CoreAPIClient }
+        ]; };
+        CoreAPIBaseService = __decorate([
+            core.Injectable()
+        ], CoreAPIBaseService);
         return CoreAPIBaseService;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(CoreAPIBaseService, [{
-            type: core.Injectable
-        }], function () { return [{ type: CoreAPIClient }]; }, null); })();
     var CoreAPIConfigConsts = /** @class */ (function () {
         function CoreAPIConfigConsts() {
         }
@@ -306,13 +303,14 @@
         CoreAPIConfigConsts.DEFAULT_TOKEN_NAME = 'token';
         return CoreAPIConfigConsts;
     }());
+    var ɵ0 = function () {
+        return localStorage.getItem(COREAPI_CONFIG_DEFAULTS.tokenName);
+    };
     var COREAPI_CONFIG_DEFAULTS = {
         headerName: CoreAPIConfigConsts.DEFAULT_HEADER_NAME,
         headerPrefix: null,
         tokenName: CoreAPIConfigConsts.DEFAULT_TOKEN_NAME,
-        tokenGetter: function () {
-            return localStorage.getItem(COREAPI_CONFIG_DEFAULTS.tokenName);
-        },
+        tokenGetter: ɵ0,
         noJwtError: false,
         noClientCheck: false,
         globalHeaders: [],
@@ -457,7 +455,7 @@
             this.globalState = globalState;
             this.fetchingSchema = false;
             this.coreAPIConfig = options.getConfig();
-            this.tokenStream = new Observable.Observable(function (obs) {
+            this.tokenStream = new rxjs.Observable(function (obs) {
                 obs.next(_this.coreAPIConfig.tokenGetter());
             });
             this.globalState.subscribe('user.logout', function (logout) {
@@ -595,13 +593,16 @@
             enumerable: true,
             configurable: true
         });
-        CoreAPIClient.ɵfac = function CoreAPIClient_Factory(t) { return new (t || CoreAPIClient)(core.ɵɵinject(CoreAPIConfig), core.ɵɵinject(ConfigService), core.ɵɵinject(GlobalState)); };
-        CoreAPIClient.ɵprov = core.ɵɵdefineInjectable({ token: CoreAPIClient, factory: CoreAPIClient.ɵfac });
+        CoreAPIClient.ctorParameters = function () { return [
+            { type: CoreAPIConfig },
+            { type: ConfigService },
+            { type: GlobalState }
+        ]; };
+        CoreAPIClient = __decorate([
+            core.Injectable()
+        ], CoreAPIClient);
         return CoreAPIClient;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(CoreAPIClient, [{
-            type: core.Injectable
-        }], function () { return [{ type: CoreAPIConfig }, { type: ConfigService }, { type: GlobalState }]; }, null); })();
     function coreAPIFactory(config, globalState) {
         var coreAPIConfig = {
             headerName: CoreAPIConfigConsts.DEFAULT_HEADER_NAME,
@@ -658,46 +659,39 @@
         return CoreAPIClientHttpError;
     }(Error));
 
+    var ɵ0$1 = coreAPIFactory;
     var CoreAPIProxyModule = /** @class */ (function () {
         function CoreAPIProxyModule() {
         }
-        CoreAPIProxyModule.ɵmod = core.ɵɵdefineNgModule({ type: CoreAPIProxyModule });
-        CoreAPIProxyModule.ɵinj = core.ɵɵdefineInjector({ factory: function CoreAPIProxyModule_Factory(t) { return new (t || CoreAPIProxyModule)(); }, providers: [
-                ConfigService,
-                GlobalState,
-                CoreAPIBaseService,
-                {
-                    provide: CoreAPIClient,
-                    useFactory: coreAPIFactory,
-                    deps: [ConfigService, GlobalState],
-                }
-            ], imports: [[]] });
+        CoreAPIProxyModule = __decorate([
+            core.NgModule({
+                declarations: [],
+                imports: [],
+                providers: [
+                    ConfigService,
+                    GlobalState,
+                    CoreAPIBaseService,
+                    {
+                        provide: CoreAPIClient,
+                        useFactory: ɵ0$1,
+                        deps: [ConfigService, GlobalState],
+                    }
+                ],
+                exports: []
+            })
+        ], CoreAPIProxyModule);
         return CoreAPIProxyModule;
     }());
-    /*@__PURE__*/ (function () { core.ɵsetClassMetadata(CoreAPIProxyModule, [{
-            type: core.NgModule,
-            args: [{
-                    declarations: [],
-                    imports: [],
-                    providers: [
-                        ConfigService,
-                        GlobalState,
-                        CoreAPIBaseService,
-                        {
-                            provide: CoreAPIClient,
-                            useFactory: coreAPIFactory,
-                            deps: [ConfigService, GlobalState],
-                        }
-                    ],
-                    exports: []
-                }]
-        }], null, null); })();
 
     exports.ConfigService = ConfigService;
     exports.CoreAPIBaseService = CoreAPIBaseService;
     exports.CoreAPIProxyModule = CoreAPIProxyModule;
     exports.GlobalState = GlobalState;
     exports.tokenNotExpired = tokenNotExpired;
+    exports.ɵ0 = ɵ0$1;
+    exports.ɵa = CoreAPIConfig;
+    exports.ɵb = CoreAPIClient;
+    exports.ɵc = coreAPIFactory;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -1,8 +1,7 @@
 import { Promise } from 'bluebird';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ConfigService } from "./config.service";
 import { GlobalState } from './global.state';
-import * as i0 from "@angular/core";
 export interface ActionParams {
     Params?: object;
     ExtraParams?: object;
@@ -11,8 +10,6 @@ export declare class CoreAPIBaseService {
     private client;
     constructor(client: CoreAPIClient);
     action(keys: Array<string>, params?: {}, extraParams?: {}): any;
-    static ɵfac: i0.ɵɵFactoryDef<CoreAPIBaseService, never>;
-    static ɵprov: i0.ɵɵInjectableDef<CoreAPIBaseService>;
 }
 export interface ICoreAPIConfig {
     globalHeaders: Array<Object>;
@@ -79,8 +76,6 @@ export declare class CoreAPIClient {
     getSchema(): any;
     action(keys: Array<string>, params?: ActionParams): Promise<any>;
     private get client();
-    static ɵfac: i0.ɵɵFactoryDef<CoreAPIClient, never>;
-    static ɵprov: i0.ɵɵInjectableDef<CoreAPIClient>;
 }
 export declare function coreAPIFactory(config: ConfigService, globalState: GlobalState): CoreAPIClient;
 export declare class CoreAPIClientHttpError extends Error {

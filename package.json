@@ -31,8 +31,6 @@
   "fesm5": "fesm5/ngx-coreapi-proxy.js",
   "fesm2015": "fesm2015/ngx-coreapi-proxy.js",
   "typings": "ngx-coreapi-proxy.d.ts",
-  "sideEffects": false,
-  "scripts": {
-    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy. This is not allowed.\\nPlease delete and rebuild the package, without compiling with Ivy, before attempting to publish.\\n')\" && exit 1"
-  }
+  "metadata": "ngx-coreapi-proxy.metadata.json",
+  "sideEffects": false
 }
