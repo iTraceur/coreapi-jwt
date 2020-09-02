@@ -3,8 +3,7 @@ import { Injectable, Injector, NgModule } from '@angular/core';
 import { LocalStorageService } from 'angular-web-storage';
 import { Promise } from 'bluebird';
 import { auth, Client } from 'coreapi';
-import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
+import { Subject, Observable } from 'rxjs';
 
 let ConfigService = class ConfigService {
     constructor() {

@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('angular-web-storage'), require('bluebird'), require('coreapi'), require('rxjs'), require('rxjs/Subject')) :
-    typeof define === 'function' && define.amd ? define('ngx-coreapi-proxy', ['exports', '@angular/core', 'angular-web-storage', 'bluebird', 'coreapi', 'rxjs', 'rxjs/Subject'], factory) :
-    (global = global || self, factory(global['ngx-coreapi-proxy'] = {}, global.ng.core, global.angularWebStorage, global.bluebird, global.coreapi, global.rxjs, global.rxjs.Subject));
-}(this, (function (exports, core, angularWebStorage, bluebird, coreapi, rxjs, Subject) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('angular-web-storage'), require('bluebird'), require('coreapi'), require('rxjs')) :
+    typeof define === 'function' && define.amd ? define('ngx-coreapi-proxy', ['exports', '@angular/core', 'angular-web-storage', 'bluebird', 'coreapi', 'rxjs'], factory) :
+    (global = global || self, factory(global['ngx-coreapi-proxy'] = {}, global.ng.core, global.angularWebStorage, global.bluebird, global.coreapi, global.rxjs));
+}(this, (function (exports, core, angularWebStorage, bluebird, coreapi, rxjs) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -242,7 +242,7 @@
     var GlobalState = /** @class */ (function () {
         function GlobalState() {
             var _this = this;
-            this.data = new Subject.Subject();
+            this.data = new rxjs.Subject();
             this.dataStream$ = this.data.asObservable();
             this.subscriptions = new Map();
             this.dataStream$.subscribe(function (data) { return _this.onEvent(data); });
